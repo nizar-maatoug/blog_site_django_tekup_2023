@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_POST
-
+from django.contrib.auth.decorators import login_required
 from .models import Post
 
 from .forms import CommentForm
@@ -55,6 +55,7 @@ def post_detail(request, year, month, day, post):
                    'form': form})
 
 @require_POST
+@login_required
 def post_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id,status=Post.Status.PUBLISHED)
     comment = None
