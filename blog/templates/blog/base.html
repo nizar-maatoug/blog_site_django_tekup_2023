@@ -8,9 +8,18 @@
 </head>
 <body>
   <div id="content">
+  {% if user.is_authenticated %}
+    <p>Hi {{ user.username }}!</p>
+    <p><a href="{% url 'accounts:logout' %}">Log Out</a></p>
+  {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'accounts:login' %}">Log In</a> |
+    <a href="{% url 'accounts:signup' %}">Sign Up</a>
+  {% endif %}
     {% block content %}
     {% endblock %}
   </div>
+  {% if user.is_authenticated %}
   <div id="sidebar">
     <h2>My blog</h2>
     <p>This is my blog.</p>
@@ -28,6 +37,7 @@
       {% endfor %}
     </ul>
   </div>
+  {% endif %}
 </body>
 </html>
 
